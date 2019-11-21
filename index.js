@@ -4,7 +4,8 @@ var http = require('http');
 
 http.createServer(function (req, res) {
   let resp = '-'
-  if(process.env.API_KEY && req.headers['API_KEY'] == process.env.API_KEY) {
+   //console.log(req.headers);
+  if(process.env.API_KEY && (req.headers['api_key'] == process.env.API_KEY || req.headers['API_KEY'] == process.env.API_KEY)) {
 	exec('./deploy.sh', (err, stdout, stderr) => {
 	  if (err) {
 		resp = `Error: ${err}`;
@@ -17,5 +18,6 @@ http.createServer(function (req, res) {
 	res.write(resp); 
 	res.end(); 
   }
-}).listen(8080); 
+
+}).listen(8080);
 console.log('Selfops Start!')
